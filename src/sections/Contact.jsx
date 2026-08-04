@@ -47,8 +47,11 @@ export default function Contact() {
       setStatus('success');
       setForm({ name: '', email: '', message: '' });
     } catch (err) {
+      console.error('EmailJS error:', err);
       setStatus('error');
-      setErrorMsg('Something went wrong sending your message. Please email me directly instead.');
+      setErrorMsg(
+        `Something went wrong sending your message. (${err?.status || ''} ${err?.text || err?.message || 'unknown error'})`
+      );
     }
   }
 
