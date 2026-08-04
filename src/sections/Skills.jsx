@@ -10,7 +10,7 @@ const SKILLS = [
   {
     img: reactNextImg,
     title: 'React & Next.js Dev',
-    desc: 'Building responsive, component-driven web apps with React and Next.js — clean code, reusable components, modern tooling.',
+    desc: 'Building responsive, component-driven web apps with React and Next.js, clean code, reusable components, modern tooling.',
     tags: ['React', 'Next.js', 'JavaScript'],
     icon: (
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
@@ -21,7 +21,7 @@ const SKILLS = [
   {
     img: htmlCssJsImg,
     title: 'HTML5, CSS3 & JS',
-    desc: 'Solid fundamentals in semantic HTML5, modern CSS3 and JavaScript — the foundation behind every interface I build.',
+    desc: 'Solid fundamentals in semantic HTML5, modern CSS3 and JavaScript, the foundation behind every interface I build.',
     tags: ['HTML5', 'CSS3', 'JavaScript'],
     icon: (
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
@@ -32,7 +32,7 @@ const SKILLS = [
   {
     img: aiAutomationImg,
     title: 'AI Automation (n8n)',
-    desc: 'Designing intelligent, automated workflows with n8n and generative AI tools — connecting apps to remove repetitive manual work.',
+    desc: 'Designing intelligent, automated workflows with n8n and generative AI tools, connecting apps to remove repetitive manual work.',
     tags: ['n8n', 'Generative AI', 'Workflows'],
     icon: (
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
@@ -43,7 +43,7 @@ const SKILLS = [
   {
     img: figmaUiImg,
     title: 'UI Design in Figma',
-    desc: 'Wireframing and designing interfaces in Figma before writing a line of code — so the build matches the vision from day one.',
+    desc: 'Wireframing and designing interfaces in Figma before writing a line of code, so the build matches the vision from day one.',
     tags: ['Figma', 'Wireframes', 'UI Design'],
     icon: (
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
@@ -65,7 +65,7 @@ const SKILLS = [
   {
     img: cppImg,
     title: 'C++ & Problem Solving',
-    desc: 'Strong grounding in object-oriented programming and C++ — built through coursework, certifications, and a short stint as a C++ developer.',
+    desc: 'Strong grounding in object-oriented programming and C++, built through coursework, certifications, and a short stint as a C++ developer.',
     tags: ['C++', 'OOP', 'Logic'],
     icon: (
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
@@ -82,7 +82,7 @@ export default function Skills() {
         <div className="sh rev">
           <div className="sh-ey"><div className="sh-line"></div><span className="sh-tag">What I Do</span></div>
           <h2 className="sh-title">Skills &amp; Services</h2>
-          <p className="sh-body">From clean React interfaces to AI-powered automation — I build and learn in public, one project at a time.</p>
+          <p className="sh-body">From clean React interfaces to AI-powered automation, I build and learn in public, one project at a time.</p>
         </div>
         <div className="svc-grid rev">
           {SKILLS.map((s) => (

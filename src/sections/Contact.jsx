@@ -1,6 +1,57 @@
-import React from 'react';
+import React, { useState } from 'react';
+import emailjs from '@emailjs/browser';
+
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 export default function Contact() {
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [status, setStatus] = useState('idle'); // idle | sending | success | error
+  const [errorMsg, setErrorMsg] = useState('');
+
+  function handleChange(e) {
+    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
+      setStatus('error');
+      setErrorMsg('Please fill in your name, email and message.');
+      return;
+    }
+
+    if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
+      setStatus('error');
+      setErrorMsg('Email sending is not configured yet. Add your EmailJS keys to the .env file (see README).');
+      return;
+    }
+
+    setStatus('sending');
+    setErrorMsg('');
+
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          name: form.name,
+          email: form.email,
+          message: form.message,
+          title: 'New message from your portfolio site',
+        },
+        { publicKey: EMAILJS_PUBLIC_KEY }
+      );
+      setStatus('success');
+      setForm({ name: '', email: '', message: '' });
+    } catch (err) {
+      setStatus('error');
+      setErrorMsg('Something went wrong sending your message. Please email me directly instead.');
+    }
+  }
+
   return (
     <>
       <div className="ctbar">
@@ -41,7 +92,7 @@ export default function Contact() {
           <div className="sh rev" style={{textAlign:'center'}}>
             <div className="sh-ey" style={{justifyContent:'center'}}><div className="sh-line"></div><span className="sh-tag">Get In Touch</span></div>
             <h2 className="sh-title">Get In Touch</h2>
-            <p className="sh-body" style={{marginLeft:'auto',marginRight:'auto'}}>Reach out directly through any of the channels below — I'll get back to you within 24 hours.</p>
+            <p className="sh-body" style={{marginLeft:'auto',marginRight:'auto'}}>Reach out directly through any of the channels below, or send a message with the form. I'll get back to you within 24 hours.</p>
           </div>
           <div className="contact-grid">
             <div className="rev">
@@ -52,8 +103,61 @@ export default function Contact() {
                 <a href="https://github.com/Abdul-Rehman-gif" target="_blank" rel="noopener noreferrer" className="cch"><div className="cch-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></div><div><div className="cch-lbl">GitHub</div><div className="cch-sub">View my code &amp; repos</div></div><span className="cch-arr">→</span></a>
                 <a href="https://www.google.com/maps/search/Lahore,+Punjab,+Pakistan" target="_blank" rel="noopener noreferrer" className="cch"><div className="cch-ico"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div className="cch-lbl">Location</div><div className="cch-sub">Lahore, Punjab, Pakistan</div></div><span className="cch-arr">→</span></a>
               </div>
-              <p className="contact-note">Prefer email or WhatsApp for the fastest response — happy to talk through ideas, projects, or just say hi.</p>
+              <p className="contact-note">Prefer email or WhatsApp for the fastest response, but happy to talk through ideas, projects, or just say hi.</p>
             </div>
+
+            <form className="contact-form rev" onSubmit={handleSubmit} noValidate>
+              <div className="cf-row">
+                <label className="cf-lbl" htmlFor="cf-name">Name</label>
+                <input
+                  id="cf-name"
+                  name="name"
+                  type="text"
+                  className="cf-input"
+                  placeholder="Your name"
+                  value={form.name}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="cf-row">
+                <label className="cf-lbl" htmlFor="cf-email">Email</label>
+                <input
+                  id="cf-email"
+                  name="email"
+                  type="email"
+                  className="cf-input"
+                  placeholder="you@example.com"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="cf-row">
+                <label className="cf-lbl" htmlFor="cf-message">Message</label>
+                <textarea
+                  id="cf-message"
+                  name="message"
+                  className="cf-input cf-textarea"
+                  placeholder="Tell me a bit about your project or idea..."
+                  rows={5}
+                  value={form.message}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <button type="submit" className="btn-p cf-submit" disabled={status === 'sending'}>
+                {status === 'sending' ? 'Sending...' : 'Send Message →'}
+              </button>
+
+              {status === 'success' && (
+                <p className="cf-status cf-status-ok">Thanks! Your message has been sent, I'll get back to you soon.</p>
+              )}
+              {status === 'error' && (
+                <p className="cf-status cf-status-err">{errorMsg}</p>
+              )}
+            </form>
           </div>
         </div>
       </section>

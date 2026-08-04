@@ -15,15 +15,15 @@ export default function About() {
             <div className="about-card">
               <div className="about-row"><span className="about-k">Name</span><span className="about-v">Abdul Rehman</span></div>
               <div className="about-row"><span className="about-k">Role</span><span className="about-v">Frontend Developer</span></div>
-              <div className="about-row"><span className="about-k">Education</span><span className="about-v">BSCS · 4th Semester</span></div>
+              <div className="about-row"><span className="about-k">Education</span><span className="about-v">BSCS · 3rd Year</span></div>
               <div className="about-row"><span className="about-k">University</span><span className="about-v">University of Central Punjab</span></div>
               <div className="about-row"><span className="about-k">Location</span><span className="about-v">Lahore, Pakistan</span></div>
-              <div className="about-row"><span className="about-k">Focus</span><span className="about-v">React · Next.js · n8n</span></div>
+              <div className="about-row"><span className="about-k">Focus</span><span className="about-v">React.js · AI Automation · n8n</span></div>
             </div>
             <div className="about-body">
-              <p>I'm a Computer Science student at the University of Central Punjab, currently in my 4th semester, with a strong focus on frontend development and AI-powered automation.</p>
+              <p>I'm a Computer Science student at the University of Central Punjab, currently in my 3rd year, with a strong focus on frontend development and AI-powered automation.</p>
               <p>I build with React and Next.js, design interfaces in Figma first, and increasingly explore how tools like n8n and generative AI can turn repetitive manual work into smart, automated workflows. I also serve as a National Ambassador at CodeAlpha, promoting tech learning among students.</p>
-              <p>This portfolio itself is part of that learning journey — built and refined as a student project to showcase real, hands-on work rather than theory alone.</p>
+              <p>This portfolio itself is part of that learning journey, built and refined as a student project to showcase real, hands-on work rather than theory alone.</p>
               <div className="about-tags">
                 <span className="about-tag">React</span>
                 <span className="about-tag">Next.js</span>

@@ -1,12 +1,31 @@
 import React, { useEffect } from 'react';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import './App.css';
 import Home from './sections/Home';
 import About from './sections/About';
 import Skills from './sections/Skills';
+import Certifications from './sections/Certifications';
 import Projects from './sections/Projects';
 import Contact from './sections/Contact';
+import ProjectDetail from './sections/ProjectDetail';
+
+function MainSections() {
+  return (
+    <>
+      <Home />
+      <About />
+      <Skills />
+      <Certifications />
+      <Projects />
+      <Contact />
+    </>
+  );
+}
 
 export default function App() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   useEffect(() => {
     /* CURSOR */
     const cur = document.getElementById('cur');
@@ -27,16 +46,34 @@ export default function App() {
     function handleAnchorClick(e) {
       const a = e.currentTarget;
       e.preventDefault();
-      const t = document.querySelector(a.getAttribute('href'));
-      if (t) t.scrollIntoView({ behavior: 'smooth' });
+      const hash = a.getAttribute('href');
       if (nav) nav.classList.remove('open');
       document.querySelectorAll('nav a:not(.nav-btn)').forEach((l) => l.classList.remove('active'));
       if (!a.classList.contains('nav-btn')) a.classList.add('active');
+
+      if (window.location.pathname !== '/') {
+        /* Coming from a project detail page - go home first, then scroll once it renders */
+        navigate('/');
+        let attempts = 0;
+        const tryScroll = () => {
+          const t = document.querySelector(hash);
+          if (t) {
+            t.scrollIntoView({ behavior: 'smooth' });
+          } else if (attempts < 40) {
+            attempts += 1;
+            requestAnimationFrame(tryScroll);
+          }
+        };
+        requestAnimationFrame(tryScroll);
+        return;
+      }
+      const t = document.querySelector(hash);
+      if (t) t.scrollIntoView({ behavior: 'smooth' });
     }
     navLinkEls.forEach((a) => a.addEventListener('click', handleAnchorClick));
 
-    /* ACTIVE NAV — highlight link based on scroll position */
-    const sections = ['home', 'about', 'services', 'portfolio', 'contact'];
+    /* ACTIVE NAV - highlight link based on scroll position */
+    const sections = ['home', 'about', 'services', 'certifications', 'portfolio', 'contact'];
     const navLinks = {};
     sections.forEach((id) => {
       const el = document.querySelector('nav a[href="#' + id + '"]');
@@ -67,6 +104,10 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   return (
     <>
       <div id="cur"></div>
@@ -78,6 +119,7 @@ export default function App() {
           <a href="#home">Home</a>
           <a href="#about">About</a>
           <a href="#services">Skills</a>
+          <a href="#certifications">Certifications</a>
           <a href="#portfolio">Projects</a>
           <a href="#contact">Contact</a>
           <a href="#contact" className="nav-btn">Let's Talk →</a>
@@ -85,11 +127,10 @@ export default function App() {
         <button className="ham" id="ham" aria-label="Menu"><span></span><span></span><span></span></button>
       </header>
 
-      <Home />
-      <About />
-      <Skills />
-      <Projects />
-      <Contact />
+      <Routes>
+        <Route path="/" element={<MainSections />} />
+        <Route path="/projects/:slug" element={<ProjectDetail />} />
+      </Routes>
 
       <footer>
         <div className="wrap">
@@ -99,11 +140,12 @@ export default function App() {
               <a href="#home">Home</a>
               <a href="#about">About</a>
               <a href="#services">Skills</a>
+              <a href="#certifications">Certifications</a>
               <a href="#portfolio">Projects</a>
               <a href="#contact">Contact</a>
             </nav>
           </div>
-          <p className="foot-copy">© 2026 Abdul Rehman — All Rights Reserved</p>
+          <p className="foot-copy">© 2026 Abdul Rehman. All Rights Reserved</p>
         </div>
       </footer>
     </>
