@@ -8,10 +8,33 @@ import Certifications from './sections/Certifications';
 import Projects from './sections/Projects';
 import Contact from './sections/Contact';
 import ProjectDetail from './sections/ProjectDetail';
+import useDocumentHead from './hooks/useDocumentHead';
+import { DEFAULT_TITLE, DEFAULT_DESCRIPTION, SITE_URL, AUTHOR_NAME } from './config/site';
+
+const HOME_JSON_LD = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Abdul Rehman Portfolio',
+    url: SITE_URL,
+    author: { '@type': 'Person', name: AUTHOR_NAME },
+  },
+];
+
+function HomeHead() {
+  useDocumentHead({
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    path: '/',
+    jsonLd: HOME_JSON_LD,
+  });
+  return null;
+}
 
 function MainSections() {
   return (
     <>
+      <HomeHead />
       <Home />
       <About />
       <Skills />
@@ -145,7 +168,7 @@ export default function App() {
               <a href="#contact">Contact</a>
             </nav>
           </div>
-          <p className="foot-copy">© 2026 Abdul Rehman. All Rights Reserved</p>
+          <p className="foot-copy">© {new Date().getFullYear()} Abdul Rehman. All Rights Reserved</p>
         </div>
       </footer>
     </>

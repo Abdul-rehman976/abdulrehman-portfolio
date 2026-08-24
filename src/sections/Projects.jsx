@@ -17,7 +17,7 @@ export default function Projects() {
               <div className="proj-card" key={p.title}>
                 <Link to={`/projects/${p.slug}`} className="proj-link-area" aria-label={`View ${p.title} details`}>
                   <div className="proj-shot-wrap">
-                    <img className="proj-shot" src={p.img} alt={p.title} />
+                    <img className="proj-shot" src={p.img} alt={p.imgAlt} loading="lazy" />
                   </div>
                   <div className="proj-body">
                     <span className={'proj-tag' + (p.tag === 'New' ? ' new' : '')}>{p.tag}</span>

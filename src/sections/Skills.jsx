@@ -88,7 +88,7 @@ export default function Skills() {
           {SKILLS.map((s) => (
             <div className="svc-card" key={s.title}>
               <div className="svc-shot-wrap">
-                <img className="svc-shot" src={s.img} alt={s.title} />
+                <img className="svc-shot" src={s.img} alt={`${s.title} skill illustration`} loading="lazy" />
               </div>
               <div className="svc-body">
                 <div className="svc-ico">{s.icon}</div>

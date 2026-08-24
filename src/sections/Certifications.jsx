@@ -25,7 +25,7 @@ export default function Certifications() {
           {CERTIFICATIONS.map((c) => (
             <div className="cert-card" key={c.title} onClick={() => setActive(c)}>
               <div className="cert-shot-wrap">
-                <img className="cert-shot" src={c.img} alt={c.title} loading="lazy" />
+                <img className="cert-shot" src={c.img} alt={`${c.title} certificate from ${c.issuer}`} loading="lazy" />
                 <div className="cert-shot-overlay">
                   <span>View Certificate</span>
                 </div>
@@ -57,7 +57,7 @@ export default function Certifications() {
         <div className="cert-lightbox" onClick={() => setActive(null)}>
           <div className="cert-lightbox-inner" onClick={(e) => e.stopPropagation()}>
             <button className="cert-lightbox-close" onClick={() => setActive(null)} aria-label="Close">×</button>
-            <img src={active.img} alt={active.title} />
+            <img src={active.img} alt={`${active.title} certificate from ${active.issuer}`} />
             <div className="cert-lightbox-meta">
               <div className="cert-lightbox-title">{active.title}</div>
               <div className="cert-lightbox-issuer">{active.issuer} · {active.date}</div>

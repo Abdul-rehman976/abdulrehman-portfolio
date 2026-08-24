@@ -37,7 +37,7 @@ export default function About() {
           </div>
           <div className="about-photo-wrap">
             <div className="about-photo">
-              <img src={profileImg} alt="Abdul Rehman"/>
+              <img src={profileImg} alt="Abdul Rehman, frontend developer and AI automation specialist based in Lahore, Pakistan"/>
             </div>
           </div>
         </div>

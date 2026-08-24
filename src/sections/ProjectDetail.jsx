@@ -1,11 +1,50 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { PROJECTS, GITHUB_PROFILE_URL } from '../data/projects';
+import useDocumentHead from '../hooks/useDocumentHead';
+import { SITE_URL, AUTHOR_NAME } from '../config/site';
 
 export default function ProjectDetail() {
   const { slug } = useParams();
   const project = PROJECTS.find((p) => p.slug === slug);
   const currentIndex = PROJECTS.findIndex((p) => p.slug === slug);
+
+  useDocumentHead(
+    project
+      ? {
+          title: `${project.title} | ${AUTHOR_NAME} — Project Case Study`,
+          description: project.summary,
+          path: `/projects/${project.slug}`,
+          jsonLd: [
+            {
+              '@context': 'https://schema.org',
+              '@type': 'CreativeWork',
+              name: project.title,
+              description: project.desc,
+              url: `${SITE_URL}/projects/${project.slug}`,
+              creator: { '@type': 'Person', name: AUTHOR_NAME, url: SITE_URL },
+              keywords: project.stack.join(', '),
+              genre: project.tag,
+            },
+            {
+              '@context': 'https://schema.org',
+              '@type': 'BreadcrumbList',
+              itemListElement: [
+                { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
+                { '@type': 'ListItem', position: 2, name: 'Projects', item: `${SITE_URL}/#portfolio` },
+                { '@type': 'ListItem', position: 3, name: project.title, item: `${SITE_URL}/projects/${project.slug}` },
+              ],
+            },
+          ],
+        }
+      : {
+          title: `Project Not Found | ${AUTHOR_NAME}`,
+          description: 'This project could not be found.',
+          path: `/projects/${slug || ''}`,
+          jsonLd: null,
+          noindex: true,
+        }
+  );
 
   if (!project) {
     return (
@@ -37,7 +76,7 @@ export default function ProjectDetail() {
         </div>
 
         <div className="pd-shot-wrap">
-          <img className="pd-shot" src={project.img} alt={project.title} />
+          <img className="pd-shot" src={project.img} alt={project.imgAlt} />
         </div>
 
         <div className="pd-body-grid">
